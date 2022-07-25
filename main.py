@@ -33,9 +33,15 @@ def sorting_dict(list_forSort):
             list_forSort[currentMax_Index] = tup
     return list_forSort
 
+def list_of_sentenes():
+    f = open("text.txt")
+    text_str = f.read()
+    ls = text_str.split(".")
+    return ls
+
 if __name__ == '__main__':
     sentence = input("Enter a sentence : ")
-    str1 = ["Python is good.", "Python is not python snake.", "This is good book."]
+    str1 = list_of_sentenes()
     ls = sentence.split(" ")
     dict = {}
     for i in range(len(str1)):
@@ -44,6 +50,13 @@ if __name__ == '__main__':
         dict[str1[i]] = count
     list_forSort = list(dict.items())
     sorted_list = sorting_dict(list_forSort)
+    results = 0
+    for i in range(len(sorted_list)):
+        if sorted_list[i][1] == 0:
+            break
+        else:
+            results += 1
+    print(f"\nSo we get {results} results for you.\n")
     for i in range(len(sorted_list)):
         if sorted_list[i][1] == 0:
             break
