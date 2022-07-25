@@ -1,21 +1,19 @@
 
 
+def matching_byPhraseEntered(ls, temp_ls):
+    count = 0
+    if ls in temp_ls:
+        count += 1
+    return count
+
 def string_matching(ls, temp_ls):
     count = 0
     for i in range(len(ls)):
         temp = ls[i]
-        k = 0   # will point a first index of list and move in increasing order.
-        l = len(temp_ls) - 1   # will point at last index of list and move in decreasing order.
-        a = int(len(temp_ls)/2)   # will point at center of list and move towards k (starting point)
-        b = int(len(temp_ls)/2)   # will point at center of list and move towards l (ending point)
-        while k <= a or l >= b:
-            if temp == temp_ls[k] or temp == temp_ls[l] or temp == temp_ls[a] or temp == temp_ls[b]:
-                count += 1
-                break
-            k += 1
-            l -= 1
-            a -= 1
-            b += 1
+        if temp in temp_ls:
+            count += 1
+            break
+            pass
 
     return count
 
@@ -39,26 +37,52 @@ def list_of_sentenes():
     ls = text_str.split(".")
     return ls
 
+def func(ls, dict, str1, sentence):
+    choice = int(input("Enter 1 if you want phrasal search other wise enter 0 : "))
+    if choice == 0:
+        for i in range(len(str1)):
+            temp_ls = str1[i].split(" ")
+            count = string_matching(ls, temp_ls)
+            dict[str1[i]] = count
+        list_forSort = list(dict.items())
+        sorted_list = sorting_dict(list_forSort)
+        results = 0
+        for i in range(len(sorted_list)):
+            if sorted_list[i][1] == 0:
+                break
+            else:
+                results += 1
+        print(f"\nSo we get {results} results for you.\n")
+        for i in range(len(sorted_list)):
+            if sorted_list[i][1] == 0:
+                break
+            else:
+                print(f"{i+1}. {sorted_list[i][0]}")
+    else:
+        for i in range(len(str1)):
+            temp_ls = str1[i].split(" ")
+            count = matching_byPhraseEntered(ls, temp_ls)
+            dict[str1[i]] = count
+        list_forSort = list(dict.items())
+        sorted_list = sorting_dict(list_forSort)
+        results = 0
+        for i in range(len(sorted_list)):
+            if sorted_list[i][1] == 0:
+                break
+            else:
+                results += 1
+        print(f"\nSo we get {results} results for you.\n")
+        for i in range(len(sorted_list)):
+            if sorted_list[i][1] == 0:
+                break
+            else:
+                print(f"{i+1}. {sorted_list[i][0]}")
+
+
+
 if __name__ == '__main__':
     sentence = input("Enter a sentence : ")
     str1 = list_of_sentenes()
     ls = sentence.split(" ")
     dict = {}
-    for i in range(len(str1)):
-        temp_ls = str1[i].split(" ")
-        count = string_matching(ls, temp_ls)
-        dict[str1[i]] = count
-    list_forSort = list(dict.items())
-    sorted_list = sorting_dict(list_forSort)
-    results = 0
-    for i in range(len(sorted_list)):
-        if sorted_list[i][1] == 0:
-            break
-        else:
-            results += 1
-    print(f"\nSo we get {results} results for you.\n")
-    for i in range(len(sorted_list)):
-        if sorted_list[i][1] == 0:
-            break
-        else:
-            print(sorted_list[i][0])
+    func(ls, dict, str1, sentence)
